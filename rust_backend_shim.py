@@ -31,11 +31,6 @@ if not os.environ.get("HYPERION_RUST_CORE_FORCE_PY"):
             reward_modulated_stdp,
             compute_fft,
             sparse_attention,
-            native_omni_vision_scan,
-            NativeUiEye,
-            NativeMotorSystem,
-            NativeIzhikevich,
-            NativeAgiKernel,
         )
         _NATIVE = True
     except Exception:
@@ -48,58 +43,7 @@ if os.environ.get("HYPERION_RUST_CORE_SHIM_VERBOSE"):
 
 if _NATIVE:
     # Wrap constructors to bypass PyO3 positional argument extraction bug in Python 3.14 on aarch64
-    _orig_NativeIzhikevich = NativeIzhikevich
-    class NativeIzhikevichWrapper:
-        def __init__(self, pattern: str, dt_ms: float):
-            self._neuron = _orig_NativeIzhikevich(pattern=pattern, dt_ms=dt_ms)
-        def step(self, dt_ms: float, i_inj: float) -> tuple:
-            res_str = self._neuron.step(dt_ms, i_inj)
-            v, spiked = res_str.split(',')
-            return (float(v), spiked == 'True')
-        def reset(self):
-            self._neuron.reset()
-    NativeIzhikevich = NativeIzhikevichWrapper
-
-    _orig_NativeAgiKernel = NativeAgiKernel
-    class NativeAgiKernelWrapper:
-        def __init__(self, depth: int, n_per_layer: int, n_channels: int, top_k: int, dt_ms: float):
-            self._kernel = _orig_NativeAgiKernel(depth=depth, n_per_layer=n_per_layer, n_channels=n_channels, top_k=top_k, dt_ms=dt_ms)
-        def sense(self, modality: int, features: list):
-            self._kernel.sense(modality, features)
-        def reward(self, magnitude: float) -> float:
-            return self._kernel.reward(magnitude)
-        def refuel(self, drive_str: str, amount: float):
-            self._kernel.refuel(drive_str, amount)
-        def tick(self) -> tuple:
-            import json
-            res_json = self._kernel.tick()
-            res = json.loads(res_json)
-            return (float(res["err"]), res["action_id"])
-        def t_ms(self) -> float:
-            return self._kernel.t_ms()
-        def drive_value(self, drive_str: str) -> float:
-            return self._kernel.drive_value(drive_str)
-        @property
-        def dopamine(self):
-            return self._kernel.dopamine
-        @property
-        def noradrenaline(self):
-            return self._kernel.noradrenaline
-        @property
-        def serotonin(self):
-            return self._kernel.serotonin
-        @property
-        def acetylcholine(self):
-            return self._kernel.acetylcholine
-        @property
-        def arousal(self):
-            return self._kernel.arousal
-        @property
-        def throttle_cortex(self):
-            return self._kernel.throttle_cortex
-    NativeAgiKernel = NativeAgiKernelWrapper
-
-else:
+    else:
     # ---------------------------------------------------------------------------
     # Pure-Python fallback (original shim)
     # ---------------------------------------------------------------------------
@@ -164,7 +108,7 @@ else:
             return float((w * v).sum())
         return (w[:, None] * v).sum(axis=0).tolist()
         
-    def native_omni_vision_scan(filepath: str, keywords: list) -> list:
+    
         raise NotImplementedError("Native vision requires the compiled hyperion_rust_core.")
 
     class NativeUiEye:

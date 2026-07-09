@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-x86_64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt || pip install numpy
+      - name: Run CLI inspect
+        run: python cli.py inspect
+      - name: Run v33 learning test
+        run: python tests/test_learning_capability_v33.py
+      - name: Run v32 learning test
+        run: python tests/test_learning_capability.py
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Run Rust kernel tests
+        run: |
+          cd agi-bundle/neurorust && cargo test
+          cd ../../rust_backend && cargo test

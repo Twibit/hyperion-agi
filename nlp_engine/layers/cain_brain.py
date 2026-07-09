@@ -187,8 +187,8 @@ class CainBrain:
                 if self.cellular_matrix.adrenaline_level <= 0:
                     print(f"[VTA] RPE: {rpe:+.3f}. Releasing {dynamic_dopamine:.2f}x Dopamine. (Load: {self.cellular_matrix.current_wattage:.1f}W, ATP: {self.cellular_matrix.global_atp:.1f}%)")
                 
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"WARNING (silenced crash): {e}")
             
         domain_name = domain
         tokens = self.thalamus.tokenize(text, domain_name)
@@ -333,7 +333,7 @@ class CainBrain:
     
     def full_status(self) -> dict:
         """Returns a comprehensive status report across ALL cortical modules."""
-        base = self.status() if hasattr(super(), 'status') else {}
+        base = {}
         return {
             **base,
             'architecture': 'CainBrain v2 — Universal Cognitive Architecture',
@@ -492,7 +492,7 @@ class CainBrain:
             print(f"[Glial Network]: Pruned {glial_stats['microglia_pruned_neurons']} dead neurons. Forged {glial_stats['astrocytes_new_synapses']} new synapses.")
             print(f"[Astrocytes]: Global ATP restored to {glial_stats['global_atp']:.1f}%")
             
-        super().sleep_consolidate(n_replays)
+        
 
     def speak(self, prompt: str, domain: str = 'auto', length: int = 100, temperature: float = None, genius_mode: bool = False, original_context: str = None) -> str:
         """
@@ -648,8 +648,8 @@ class CainBrain:
                                     total_triples += stats.get('relational_triples', 0)
                                     learned_blocks += 1
                             links_followed += 1
-                        except Exception:
-                            pass
+                        except Exception as e:
+                            print(f"WARNING (silenced crash): {e}")
                             
                     return f"Foraging cycle complete on {target_url} (and {links_followed} sub-resources). Processed {learned_blocks} distinct semantic blocks and extracted {total_triples} logical triples. Knowledge fully integrated."
                 except Exception as e:
@@ -794,8 +794,8 @@ class CainBrain:
                         self.knowledge_graph.db_conn.execute("VACUUM")
                         self.knowledge_graph.db_conn.commit()
                         print("  [Autopoietic Drive]: Memory vacuumed. Free energy minimized. Homeostasis restored.")
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        print(f"WARNING (silenced crash): {e}")
                     self.last_activity_time = time.time()
                     continue
                     
@@ -920,8 +920,8 @@ class CainBrain:
             try:
                 with open(text_or_path, 'r', encoding='utf-8') as f:
                     content = f.read()
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"WARNING (silenced crash): {e}")
                 
         scent_data = self.olfactory_bulb.sniff(content)
         dominant = scent_data["dominant_scent"]

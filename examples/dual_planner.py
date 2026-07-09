@@ -46,7 +46,7 @@ class HyperionLeftBrain:
     def __init__(self, dim):
         self.blanket = CAINBlanket(dim)
         self.minicolumn = PredictiveMinicolumn(in_dim=dim, out_dim=dim, sparsity=0.1)
-        self.search_engine = CAINTreeSearch(dim, self.minicolumn.generative_weights)
+        self.search_engine = LinearScorer(dim, self.minicolumn.generative_weights)
         
     def evaluate_and_collapse(self, mapped_proposals, target_prior):
         """
