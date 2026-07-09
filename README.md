@@ -27,7 +27,7 @@ glued together. Concretely, it contains:
 - A **cerebellum forward/inverse model**, a **hippocampus** with
   episode replay, a **basal ganglia** action selector, and an
   **active-inference** policy selector.
-- A **Hebbian embedding cortex** + **N-gram language model** +
+- A **Hebbian embedding cortex** + **Predictive Coding language model** +
   **SQLite episodic memory** for a very small chat loop
   (`nlp_engine/layers/cain_brain.py`, `main.py`).
 - A **Markov-blanket + Expected-Free-Energy tree-search planner**

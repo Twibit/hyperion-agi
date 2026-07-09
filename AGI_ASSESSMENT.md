@@ -41,7 +41,7 @@ Hyperion is three loosely-coupled personalities glued into one repo:
 | Personality | Entry point | What it really does |
 |---|---|---|
 | **Dual-brain thought** | `dual_planner.py` | Generates ~10 000 random gaussian vectors ("right brain"), scores them against a target vector via Expected-Free-Energy tree search ("left brain"). Fun demo of predictive-coding math, not intelligence. |
-| **CainBrain chat** | `main.py` + `nlp_engine/layers/cain_brain.py` | An N-gram language model + Hebbian embedding cortex + SQLite episodic memory + keyword-based intent classifier. Chats in short sentences from a hand-written phrase pool, with emojis. |
+| **CainBrain chat** | `main.py` + `nlp_engine/layers/cain_brain.py` | A Predictive Coding language model + Hebbian embedding cortex + SQLite episodic memory + keyword-based intent classifier. Chats in short sentences from a hand-written phrase pool, with emojis. |
 | **Aurora-Omnia embodied loop** | `embodied_agent/organism.py` | Actually the most serious subsystem: a step-based observer with cortex stacks (predictive block, MoE, world model), global workspace + default mode network, cerebellum forward/inverse model, hippocampus, active inference selector, thalamic routing, metabolic budget, neuromodulator bus. Does *not* learn a task to competence. |
 
 The three do **not** actually integrate. `main.py` never calls the
@@ -143,7 +143,7 @@ build system.
 If a future engineer wants to push this codebase toward general
 capability, the levers that would actually matter are:
 
-1. **Replace the N-gram language head** in `CainBrain` with a real
+1. **Replace the Predictive Coding language head** in `CainBrain` with a real
    trained language model or, at minimum, a small transformer on the
    Wiktionary corpus this repo already knows how to ingest.
 2. **Wire the three personalities into one control loop.** The
