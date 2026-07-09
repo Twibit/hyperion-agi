@@ -1,0 +1,20 @@
+[package]
+name = "hyperion_rust_core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "hyperion_rust_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+# pyo3 0.29 is what is cached in this environment, so an offline build works.
+# (Originally pinned to 0.20; bumped to match the local registry cache.)
+pyo3 = { version = "0.29", features = ["extension-module"] }
+fnv = "1.0"
+serde_json = "1.0"
+ai_eye = { path = "/sdcard/Download/ai_eye" }
+telekinesis = { path = "../telekinesis" }
+tokio = { version = "1.0", features = ["rt-multi-thread", "macros"] }
+neurorust = { path = "../agi-bundle/neurorust" }
+agikernel = { path = "../agi-bundle/agikernel" }

@@ -1,0 +1,29 @@
+THE FOUNDATIONS OF ASSEMBLY AND BINARY PHYSICS
+
+CHAPTER 1: BOOLEAN LOGIC
+The fundamental rules of the digital universe operate on binary values: 0 and 1.
+The AND gate outputs 1 only if both inputs are 1. Example: AND 1 1 is 1. Example: AND 1 0 is 0.
+The OR gate outputs 1 if either input is 1. Example: OR 1 0 is 1. Example: OR 0 0 is 0.
+The XOR gate outputs 1 if the inputs are different. Example: XOR 1 0 is 1. Example: XOR 1 1 is 0.
+The NOT gate inverts the input. Example: NOT 1 is 0. Example: NOT 0 is 1.
+
+CHAPTER 2: CPU REGISTERS
+A CPU uses tiny, extremely fast memory locations called registers.
+Common registers are EAX, EBX, ECX, and EDX.
+EAX is the primary accumulator used for arithmetic.
+EBX is the base register used for pointers.
+ECX is the counter register used for loops.
+EDX is the data register used for I/O.
+
+CHAPTER 3: ASSEMBLY INSTRUCTIONS
+To move data, we use the MOV instruction. MOV EAX 5 moves the value 5 into EAX.
+To add numbers, we use the ADD instruction. ADD EAX EBX adds EBX to EAX.
+To subtract numbers, we use the SUB instruction. SUB EAX 1 subtracts 1 from EAX.
+To save data temporarily, we use the Stack.
+PUSH EAX pushes the value of EAX onto the stack.
+POP EBX removes the top value from the stack and places it into EBX.
+To jump to a new location, we use JMP. JMP loops changes the execution path.
+To compare values, we use CMP. CMP EAX 0 compares EAX to 0.
+
+CONCLUSION
+By mastering these basic operators, all complex logic can be constructed.

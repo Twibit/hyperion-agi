@@ -1,0 +1,6 @@
+numpy
+beautifulsoup4
+requests
+lxml
+wikipedia-api
+colorama

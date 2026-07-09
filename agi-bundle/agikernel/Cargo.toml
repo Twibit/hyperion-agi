@@ -1,0 +1,64 @@
+[package]
+name = "agikernel"
+version = "0.1.0"
+edition = "2021"
+authors = ["agikernel contributors"]
+description = "A biologically-grounded kernel/hardware design concept for theoretical AGI, built on top of neurorust"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://example.org/agikernel"
+keywords = ["agi", "neuromorphic", "kernel", "cortex", "biological"]
+categories = ["science", "simulation", "os"]
+
+[lib]
+name = "agikernel"
+path = "src/lib.rs"
+
+[[example]]
+name = "agikernel-demo"
+path = "examples/mini_agi.rs"
+
+[dependencies]
+# The biologically accurate neuron substrate. Path dependency because both
+# crates ship in the same tarball; swap for a version = "0.1" once neurorust
+# is published.
+neurorust = { path = "../neurorust", version = "0.1" }
+
+# Numerics / data
+ndarray = "0.16"
+nalgebra = "0.33"
+num-traits = "0.2"
+
+# Concurrency primitives (message bus, cortical column parallelism)
+crossbeam-channel = "0.5"
+parking_lot = "0.12"
+rayon = "1.10"
+
+# Serialization / persistence (memory consolidation → disk)
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+bincode = "1.3"
+bitvec = { version = "1", features = ["serde"] }
+
+# Compression (episodic replay buffers)
+zstd = "0.13"
+
+# Utility
+thiserror = "1"
+rand = "0.8"
+rand_distr = "0.4"
+log = "0.4"
+env_logger = "0.11"
+
+[features]
+default = []
+# Route the cerebellar linear-algebra kernels through Julia via neurorust's FFI.
+julia = ["neurorust/julia"]
+
+[dev-dependencies]
+approx = "0.5"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
