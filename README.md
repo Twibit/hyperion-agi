@@ -70,12 +70,11 @@ you prefer.
 ### If you have a Rust toolchain
 
 The `embodied_agent` numeric kernels have a Rust fast path. If your
-current machine's `.so` doesn't match the shipped one (`file
-hyperion_core/target/release/libhyperion_core.so` will tell you), you
-can rebuild it:
+current machine's architecture isn't compatible, you can rebuild them:
 
 ```bash
-cd hyperion_core && cargo build --release
+cd rust_backend && cargo build --release
+cd ../agi-bundle/neurorust && cargo build --release
 ```
 
 Otherwise the pure-numpy fallback kicks in automatically. You can force
@@ -88,18 +87,18 @@ HYPERION_FORCE_PY=1 python3 cli.py aurora --steps 100
 ## Repository layout (high level)
 
 ```
-dual_planner/
-├── embodied_agent/       # The most complete subsystem. Embodied loop.
-├── nlp_engine/               # Cortex modules (CainBrain), used by main.py.
-├── cognitive_plugins/     # Amygdala / claustrum / VTA / basal ganglia / ...
-├── hyperion_core/      # Rust numeric kernels (ctypes).
-├── dual_planner.py         # Dual-brain (right = noise, left = CAIN) demo.
-├── main.py             # CainBrain chat loop (needs data/).
-├── cli.py # ONE entry point for all of the above.
-├── rust_backend_shim.py  # Pure-Python shim for the missing PyO3 module.
-├── AGI_ASSESSMENT.md   # Honest evaluation of the AGI claim.
-├── CHANGES.md          # Every change made vs. the original archive.
-└── README.md           # This file.
+hyperion/
+├── cli.py                    # ONE entry point for all modes.
+├── embodied_agent/           # The most complete subsystem. Embodied loop.
+├── nlp_engine/               # Cortex modules (CainBrain).
+├── cognitive_plugins/        # Amygdala / claustrum / VTA / basal ganglia / ...
+├── rust_backend/             # Legacy Rust numeric kernels (ctypes).
+├── agi-bundle/neurorust/     # v33 Advanced Rust kernels (WTA, SIMD, STDP).
+├── agi-kernel/               # C++/CUDA runtime execution kernels.
+├── docs/                     # Assessment, changelogs, architecture guides.
+├── examples/                 # Extracted legacy scripts (main, planner, gridworld).
+├── rust_backend_shim.py      # Pure-Python shim for the missing PyO3 module.
+└── README.md                 # This file.
 ```
 
 ## Provenance and honesty
